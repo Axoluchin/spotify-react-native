@@ -1,6 +1,6 @@
-import './styles/global.css';
+import './styles/global.css'
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react'
 
 import {
   SafeAreaView,
@@ -9,36 +9,35 @@ import {
   useColorScheme,
   View,
   Linking,
-  Alert,
-} from 'react-native';
-import {colorScheme} from 'nativewind';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {SPOTIFY_TOKEN, SPOTIFY_URI} from './global-config';
-import {LoginForm} from './features/login';
+} from 'react-native'
+import {colorScheme} from 'nativewind'
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {SPOTIFY_TOKEN, SPOTIFY_URI} from './global-config'
+import {LoginForm} from './features/login'
+import useUserToken from './hooks/useUserToken'
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
 
 const useInitialURL = () => {
-  const [url, setUrl] = useState('None');
+  const {isLoading, setToken, userToken} = useUserToken()
 
   useEffect(() => {
     const handleDeepLink = (props: {url: string}) => {
-      const params = new URL(props.url).searchParams.get('code') || 'Nada';
-      Alert.alert(params);
-      setUrl(props.url);
-    };
+      const regex = /[?&]([^=#]+)=([^&#]*)/g
+      const match = regex.exec(props.url)![2]
+      setToken(match)
+    }
+    Linking.addEventListener('url', handleDeepLink)
+  }, [])
 
-    Linking.addEventListener('url', handleDeepLink);
-  }, [url]);
-
-  return {url};
-};
+  return {userToken, isLoading}
+}
 
 function App(): React.JSX.Element {
-  const themeScheme = useColorScheme();
-  colorScheme.set(themeScheme || 'system');
+  const themeScheme = useColorScheme()
+  colorScheme.set(themeScheme || 'system')
 
-  const {url: initialUrl} = useInitialURL();
+  const {userToken, isLoading} = useInitialURL()
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -51,13 +50,14 @@ function App(): React.JSX.Element {
           <View className="bg-white">
             <Text>{SPOTIFY_TOKEN}</Text>
             <Text>{SPOTIFY_URI}</Text>
-            <Text>{initialUrl}</Text>
+            <Text>{userToken}</Text>
+            {isLoading && <Text>Cargando</Text>}
           </View>
         </View>
-        <LoginForm />
+        {!userToken && <LoginForm />}
       </SafeAreaView>
     </QueryClientProvider>
-  );
+  )
 }
 
-export default App;
+export default App
