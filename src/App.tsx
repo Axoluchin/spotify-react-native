@@ -9,51 +9,54 @@ import {
   useColorScheme,
   View,
   Linking,
+  Alert,
 } from 'react-native';
 import {colorScheme} from 'nativewind';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {SPOTIFY_TOKEN, SPOTIFY_URI} from './global-config';
+import {LoginForm} from './features/login';
+
+const queryClient = new QueryClient();
 
 const useInitialURL = () => {
-  const [url, setUrl] = useState<string | null>(null);
-  const [processing, setProcessing] = useState(true);
+  const [url, setUrl] = useState('None');
 
   useEffect(() => {
-    const getUrlAsync = async () => {
-      // Get the deep link used to open the app
-      const initialUrl = await Linking.getInitialURL();
-
-      // The setTimeout is just for testing purpose
-      setTimeout(() => {
-        setUrl(initialUrl);
-        setProcessing(false);
-      }, 1000);
+    const handleDeepLink = (props: {url: string}) => {
+      const params = new URL(props.url).searchParams.get('code') || 'Nada';
+      Alert.alert(params);
+      setUrl(props.url);
     };
 
-    getUrlAsync();
-  }, []);
+    Linking.addEventListener('url', handleDeepLink);
+  }, [url]);
 
-  return {url, processing};
+  return {url};
 };
 
 function App(): React.JSX.Element {
   const themeScheme = useColorScheme();
   colorScheme.set(themeScheme || 'system');
-  const {url: initialUrl, processing} = useInitialURL();
+
+  const {url: initialUrl} = useInitialURL();
 
   return (
-    <SafeAreaView>
-      <StatusBar />
-      <View>
-        <Text className="font-bold text-4xl text-center dark:text-white text-black p-4 bg-emerald-400 m-8 rounded-xl">
-          Spotify RN
-        </Text>
-        <View className="bg-white">
-          <Text>{SPOTIFY_TOKEN}</Text>
-          <Text>{SPOTIFY_URI}</Text>
-          {processing && <Text>{initialUrl}</Text>}
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaView>
+        <StatusBar />
+        <View>
+          <Text className="font-bold text-4xl text-center dark:text-white text-black p-4 bg-emerald-400 m-8 rounded-xl">
+            Spotify RN
+          </Text>
+          <View className="bg-white">
+            <Text>{SPOTIFY_TOKEN}</Text>
+            <Text>{SPOTIFY_URI}</Text>
+            <Text>{initialUrl}</Text>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+        <LoginForm />
+      </SafeAreaView>
+    </QueryClientProvider>
   );
 }
 
