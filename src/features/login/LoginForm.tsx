@@ -1,18 +1,24 @@
-import React from 'react';
-import {View, Text, Button, Linking} from 'react-native';
-import requestAuth from '../../api/requestsAuth';
+import React from 'react'
+import {View, Text, Linking, TouchableOpacity} from 'react-native'
+import requestAuth from '../../api/requestsAuth'
 
 export default function LoginForm() {
   const onClick = () => {
-    Linking.openURL(requestAuth);
-  };
+    Linking.openURL(requestAuth)
+  }
 
   return (
-    <View className="bg-slate-600 p-8">
-      <Text className="text-center">
-        Inicia sesión para acceder al programa
+    <View className="bg-black border border-slate-900 rounded-xl p-8 m-2 gap-8">
+      <Text className="dark:text-white text-center text-4xl font-bold">
+        Inicia sesión en Spotify
       </Text>
-      <Button onPress={onClick} title="Iniciar sesión" />
+      <TouchableOpacity
+        className="bg-emerald-500 p-4 rounded-full"
+        onPress={onClick}>
+        <Text className="text-center text-white font-semibold text-2xl">
+          Iniciar sesión
+        </Text>
+      </TouchableOpacity>
     </View>
-  );
+  )
 }

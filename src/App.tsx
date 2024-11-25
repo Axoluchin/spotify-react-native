@@ -10,6 +10,7 @@ import {
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
 import {TabNav} from './navigation'
+import useDeepLink from './hooks/useDeepLink'
 
 const queryClient = new QueryClient()
 
@@ -17,10 +18,11 @@ function App(): React.JSX.Element {
   const themeScheme = useColorScheme()
   colorScheme.set(themeScheme || 'system')
 
+  useDeepLink()
+
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar
-        translucent
         backgroundColor={
           (themeScheme === 'dark' ? DarkTheme : DefaultTheme).colors.card
         }

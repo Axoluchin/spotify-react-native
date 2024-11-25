@@ -5,8 +5,14 @@ const Stack = createNativeStackNavigator()
 
 function StackOffline() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   )
 }
