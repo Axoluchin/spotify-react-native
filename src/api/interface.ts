@@ -43,10 +43,10 @@ export interface AlbumResponse {
   offset: number
   previous: string
   total: number
-  items: Item[]
+  items: AlbumTimestamp[]
 }
 
-export interface Item {
+export interface AlbumTimestamp {
   added_at: string
   album: Album
 }
@@ -74,10 +74,6 @@ export interface Album {
   popularity: number
 }
 
-export interface ExternalUrls {
-  spotify: string
-}
-
 export interface Image {
   url: string
   height: number
@@ -89,16 +85,12 @@ export interface Restrictions {
 }
 
 export interface Artist {
-  external_urls: ExternalUrls2
+  external_urls: ExternalUrls
   href: string
   id: string
   name: string
   type: string
   uri: string
-}
-
-export interface ExternalUrls2 {
-  spotify: string
 }
 
 export interface Tracks {
@@ -108,21 +100,21 @@ export interface Tracks {
   offset: number
   previous: string
   total: number
-  items: Item2[]
+  items: TrackForAlbum[]
 }
 
-export interface Item2 {
-  artists: Artist2[]
+export interface TrackForAlbum {
+  artists: Artist[]
   available_markets: string[]
   disc_number: number
   duration_ms: number
   explicit: boolean
-  external_urls: ExternalUrls4
+  external_urls: ExternalUrls
   href: string
   id: string
   is_playable: boolean
   linked_from: LinkedFrom
-  restrictions: Restrictions2
+  restrictions: Restrictions
   name: string
   preview_url: string
   track_number: number
@@ -131,37 +123,32 @@ export interface Item2 {
   is_local: boolean
 }
 
-export interface Artist2 {
-  external_urls: ExternalUrls3
+export interface Track {
+  album: Album
+  artists: Artist[]
+  available_markets: string[]
+  disc_number: number
+  duration_ms: number
+  explicit: boolean
+  external_ids: ExternalIds
+  external_urls: ExternalUrls
   href: string
   id: string
+  is_local: boolean
   name: string
+  popularity: number
+  preview_url: string
+  track_number: number
   type: string
   uri: string
-}
-
-export interface ExternalUrls3 {
-  spotify: string
-}
-
-export interface ExternalUrls4 {
-  spotify: string
 }
 
 export interface LinkedFrom {
-  external_urls: ExternalUrls5
+  external_urls: ExternalUrls
   href: string
   id: string
   type: string
   uri: string
-}
-
-export interface ExternalUrls5 {
-  spotify: string
-}
-
-export interface Restrictions2 {
-  reason: string
 }
 
 export interface Copyright {
@@ -173,4 +160,83 @@ export interface ExternalIds {
   isrc: string
   ean: string
   upc: string
+}
+
+// * Playlists
+
+export interface PlaylistResponse {
+  href: string
+  limit: number
+  next: string
+  offset: number
+  previous: string
+  total: number
+  items: Playlist[]
+}
+
+export interface Playlist {
+  collaborative: boolean
+  description: string
+  external_urls: ExternalUrls
+  href: string
+  id: string
+  images: Image[]
+  name: string
+  owner: Owner
+  public: boolean
+  snapshot_id: string
+  tracks: TracksRef
+  type: string
+  uri: string
+}
+
+export interface Image {
+  url: string
+  height: number
+  width: number
+}
+
+export interface Owner {
+  external_urls: ExternalUrls
+  followers: Followers
+  href: string
+  id: string
+  type: string
+  uri: string
+  display_name: string
+}
+
+export interface Followers {
+  href: string
+  total: number
+}
+
+export interface TracksRef {
+  href: string
+  total: number
+}
+
+export interface RecentlyPlayedResponse {
+  href: string
+  limit: number
+  next: string
+  cursors: Cursors
+  total: number
+  items: {
+    track: Track
+    played_at: string
+    context: Context
+  }[]
+}
+
+export interface Cursors {
+  after: string
+  before: string
+}
+
+export interface Context {
+  type: string
+  href: string
+  external_urls: ExternalUrls
+  uri: string
 }

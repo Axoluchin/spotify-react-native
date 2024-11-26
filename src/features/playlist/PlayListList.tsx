@@ -1,13 +1,13 @@
 import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native'
 import React from 'react'
-import {Album} from '../../api/interface'
+import {Playlist} from '../../api/interface'
 
 export interface AlbumListProps {
   title: string
-  albums: Album[]
+  albums: Playlist[]
 }
 
-const AlbumList = ({albums, title}: AlbumListProps) => {
+const PlayListList = ({albums, title}: AlbumListProps) => {
   return (
     <View>
       <Text className="dark:text-white text-2xl font-satochi font-semibold mx-4 mb-2">
@@ -22,7 +22,7 @@ const AlbumList = ({albums, title}: AlbumListProps) => {
         horizontal
         data={albums}
         keyExtractor={({id}) => id}
-        renderItem={({item: {name, images, artists}}) => (
+        renderItem={({item: {name, images, owner}}) => (
           <TouchableOpacity className="w-48 gap-2">
             <Image src={images[0].url} className="size-48 rounded-lg" />
             <Text
@@ -31,8 +31,11 @@ const AlbumList = ({albums, title}: AlbumListProps) => {
               className="text-white font-satochi">
               {name}
             </Text>
-            <Text className="text-secondary font-satochi">
-              de {artists.map(({name}) => name)}
+            <Text
+              textBreakStrategy="simple"
+              numberOfLines={2}
+              className="text-secondary font-satochi">
+              {owner.display_name}
             </Text>
           </TouchableOpacity>
         )}
@@ -41,4 +44,4 @@ const AlbumList = ({albums, title}: AlbumListProps) => {
   )
 }
 
-export default AlbumList
+export default PlayListList
