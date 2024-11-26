@@ -25,14 +25,14 @@ function App(): React.JSX.Element {
             themeScheme === 'dark'
               ? {
                   ...DarkTheme,
-                  colors: {...DarkTheme.colors, background: '#121212'},
+                  colors: {...DarkTheme.colors, background: '#111111'},
                 }
               : DefaultTheme
           }>
           <StatusBar
             backgroundColor={
               themeScheme === 'dark'
-                ? '#121212'
+                ? '#111111'
                 : DefaultTheme.colors.background
             }
             barStyle={themeScheme === 'dark' ? 'light-content' : 'dark-content'}

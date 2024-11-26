@@ -1,14 +1,25 @@
-import {SafeAreaView, Text, View} from 'react-native'
+import {SafeAreaView, ScrollView, Text, View} from 'react-native'
+import AlbumList from '../../features/albums/AlbumList'
+import {useQuery} from '@tanstack/react-query'
+import {getUserSavedAlbums} from '../../api/albums'
+import {useAuthContext} from '../../auth'
 
 const Home = () => {
+  const {accessToken} = useAuthContext()
+  const {data, isLoading} = useQuery({
+    queryKey: ['meAlbums'],
+    queryFn: () => getUserSavedAlbums(accessToken),
+  })
   return (
     <SafeAreaView>
-      <View>
-        <Text className="font-bold text-4xl text-center dark:text-white text-black p-4 bg-emerald-400 m-8 rounded-xl">
-          Spotify RN
-        </Text>
-        <View></View>
-      </View>
+      <ScrollView>
+        <View className="">
+          <AlbumList
+            title="Tus albums guardados"
+            albums={data?.items.map(({album}) => album) || []}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

@@ -10,9 +10,14 @@ const Home = () => {
       {isAuthenticated ? (
         <ProfileInfo />
       ) : (
-        <Text className="dark:text-white text-5xl text-center font-bold m-4">
-          Mi cuenta
-        </Text>
+        <View>
+          <Text className="dark:text-white text-5xl text-center font-bold m-4 font-satochi">
+            Mi cuenta
+          </Text>
+          <Text className="text-secondary text-center font-satochi">
+            Inicia sesión para obtener información de tu cuenta
+          </Text>
+        </View>
       )}
       {!!isAuthenticated && (
         <TouchableOpacity
