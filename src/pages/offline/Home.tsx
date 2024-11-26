@@ -1,14 +1,19 @@
 import {View, Text, TouchableOpacity} from 'react-native'
 import {useAuthContext} from '../../auth'
+import {ProfileInfo} from '../../features/profile'
 
 const Home = () => {
   const {isAuthenticated, logout} = useAuthContext()
 
   return (
     <View className="flex-1 justify-between">
-      <Text className="dark:text-white text-5xl text-center font-bold m-4">
-        Mi cuenta
-      </Text>
+      {isAuthenticated ? (
+        <ProfileInfo />
+      ) : (
+        <Text className="dark:text-white text-5xl text-center font-bold m-4">
+          Mi cuenta
+        </Text>
+      )}
       {!!isAuthenticated && (
         <TouchableOpacity
           onPress={logout}

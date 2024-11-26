@@ -35,7 +35,7 @@ function TabNav() {
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />
         },
-        tabBarActiveTintColor: '#008839FF',
+        tabBarActiveTintColor: '#1ED760',
         headerShown: false,
       })}>
       {isAuthenticated ? (

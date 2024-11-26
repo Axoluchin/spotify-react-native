@@ -21,10 +21,19 @@ function App(): React.JSX.Element {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <NavigationContainer
-          theme={themeScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          theme={
+            themeScheme === 'dark'
+              ? {
+                  ...DarkTheme,
+                  colors: {...DarkTheme.colors, background: '#121212'},
+                }
+              : DefaultTheme
+          }>
           <StatusBar
             backgroundColor={
-              (themeScheme === 'dark' ? DarkTheme : DefaultTheme).colors.card
+              themeScheme === 'dark'
+                ? '#121212'
+                : DefaultTheme.colors.background
             }
             barStyle={themeScheme === 'dark' ? 'light-content' : 'dark-content'}
           />
