@@ -7,6 +7,9 @@ module.exports = {
     extend: {
       colors: {
         spotify: '#1ED760',
+        dark: '#121212',
+        secondary: '#898989',
+        tertiary: '#323232',
       },
     },
   },
