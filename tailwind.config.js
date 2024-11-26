@@ -1,3 +1,5 @@
+import {platformSelect} from 'nativewind/theme'
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
@@ -10,6 +12,13 @@ module.exports = {
         dark: '#121212',
         secondary: '#898989',
         tertiary: '#323232',
+      },
+      fontFamily: {
+        satochi: platformSelect({
+          ios: 'Satochi',
+          android: 'Satochi',
+          default: 'Satochi',
+        }),
       },
     },
   },

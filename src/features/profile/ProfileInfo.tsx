@@ -27,10 +27,17 @@ const ProfileInfo = () => {
             src={data.images[0].url}
             className="size-32 rounded-full m-auto"
           />
-          <View className="flex-1">
-            <Text className="dark:text-white text-3xl font-bold">
+          <View className="flex-1 justify-between">
+            <Text className="dark:text-white text-3xl font-semibold font-satochi">
               {data.display_name}
             </Text>
+            <View className="flex-row justify-start">
+              <Text className="text-white w-7 text-lg">
+                {data.followers.total}
+              </Text>
+              <Text className="text-secondary  text-lg">Seguidores</Text>
+            </View>
+            <Text className="text-secondary  text-lg">{data.id}</Text>
           </View>
         </LinearGradient>
         <LinearGradient
@@ -43,9 +50,11 @@ const ProfileInfo = () => {
               size={32}
               className="w-10"
             />
-            <Text className="text-white text-lg">Plan Actual</Text>
+            <Text className="text-white text-lg font-light font-satochi">
+              Plan Actual
+            </Text>
           </View>
-          <Text className=" text-spotify capitalize text-3xl">
+          <Text className=" text-spotify capitalize text-3xl font-satochi">
             {data.product}
           </Text>
         </LinearGradient>

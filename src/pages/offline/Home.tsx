@@ -18,7 +18,7 @@ const Home = () => {
         <TouchableOpacity
           onPress={logout}
           className="bg-red-900 m-4 p-4 rounded-full">
-          <Text className="text-center text-white font-semibold text-xl">
+          <Text className="text-center text-white font-semibold text-xl font-satochi">
             Cerrar sesión
           </Text>
         </TouchableOpacity>

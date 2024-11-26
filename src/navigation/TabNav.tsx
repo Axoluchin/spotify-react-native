@@ -17,6 +17,9 @@ function TabNav() {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
+        tabBarLabelStyle: {
+          fontFamily: 'Satochi',
+        },
         tabBarIcon: ({focused, color, size}) => {
           let iconName = focused ? 'home' : 'home-outline'
 
