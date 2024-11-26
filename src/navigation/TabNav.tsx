@@ -1,15 +1,19 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import StackOffline from './StackOffline'
-import StackOnline from './StackOnline'
-import useUserToken from '../hooks/useUserToken'
 import Login from '../pages/online/Login'
+import useDeepLink from '../hooks/useDeepLink'
+import {useAuthContext} from '../auth'
+
+import StackOnline from './StackOnline'
+import StackOffline from './StackOffline'
 
 const Tab = createBottomTabNavigator()
 
 function TabNav() {
-  const {userToken} = useUserToken()
+  const {isAuthenticated} = useAuthContext()
+  useDeepLink()
+
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -34,7 +38,7 @@ function TabNav() {
         tabBarActiveTintColor: '#008839FF',
         headerShown: false,
       })}>
-      {userToken ? (
+      {isAuthenticated ? (
         <Tab.Screen name="Spotify" component={StackOnline} />
       ) : (
         <Tab.Screen name="Login" component={Login} />

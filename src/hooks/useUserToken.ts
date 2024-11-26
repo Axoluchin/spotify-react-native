@@ -1,29 +1,31 @@
-import {useEffect, useState} from 'react'
+import {useQuery, useQueryClient} from '@tanstack/react-query'
 import * as Keychain from 'react-native-keychain'
 
 const useUserToken = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [userToken, setUserToken] = useState<string>()
+  const {invalidateQueries} = useQueryClient()
 
-  useEffect(() => {
-    const getPassword = async () => {
+  const {data, isLoading} = useQuery({
+    queryKey: ['userToken'],
+    queryFn: async () => {
       try {
         const result = await Keychain.getGenericPassword()
-        if (result) {
-          setUserToken(result.password)
+        return {
+          userToken: result ? result.password : undefined,
+          refreshToken: undefined,
         }
       } catch (error) {
-      } finally {
-        setIsLoading(false)
+        return {
+          userToken: undefined,
+          refreshToken: undefined,
+        }
       }
-    }
-    getPassword()
-  }, [])
+    },
+  })
 
   const setToken = async (token: string) => {
     try {
       await Keychain.setGenericPassword('spotify', token)
-      setUserToken(token)
+      invalidateQueries({queryKey: ['userToken']})
       return true
     } catch (error) {
       return false
@@ -33,13 +35,20 @@ const useUserToken = () => {
   const removeToken = async () => {
     try {
       await Keychain.resetGenericPassword()
+      invalidateQueries({queryKey: ['userToken']})
       return true
     } catch (error) {
       return false
     }
   }
 
-  return {isLoading, userToken, setToken, removeToken}
+  return {
+    isLoading,
+    userToken: data?.userToken,
+    refreshToken: data?.refreshToken,
+    setToken,
+    removeToken,
+  }
 }
 
 export default useUserToken

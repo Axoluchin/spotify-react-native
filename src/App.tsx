@@ -10,28 +10,27 @@ import {
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
 import {TabNav} from './navigation'
-import useDeepLink from './hooks/useDeepLink'
-
-const queryClient = new QueryClient()
+import AuthProvider from './auth/AuthContexts'
 
 function App(): React.JSX.Element {
+  const queryClient = new QueryClient()
   const themeScheme = useColorScheme()
   colorScheme.set(themeScheme || 'system')
 
-  useDeepLink()
-
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar
-        backgroundColor={
-          (themeScheme === 'dark' ? DarkTheme : DefaultTheme).colors.card
-        }
-        barStyle={themeScheme === 'dark' ? 'light-content' : 'dark-content'}
-      />
-      <NavigationContainer
-        theme={themeScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <TabNav />
-      </NavigationContainer>
+      <AuthProvider>
+        <NavigationContainer
+          theme={themeScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <StatusBar
+            backgroundColor={
+              (themeScheme === 'dark' ? DarkTheme : DefaultTheme).colors.card
+            }
+            barStyle={themeScheme === 'dark' ? 'light-content' : 'dark-content'}
+          />
+          <TabNav />
+        </NavigationContainer>
+      </AuthProvider>
     </QueryClientProvider>
   )
 }

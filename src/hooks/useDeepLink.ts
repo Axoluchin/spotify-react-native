@@ -1,15 +1,15 @@
 import {useEffect} from 'react'
-import useUserToken from './useUserToken'
 import {Linking} from 'react-native'
+import {useAuthContext} from '../auth'
 
 const useDeepLink = () => {
-  const {setToken} = useUserToken()
+  const {login} = useAuthContext()
 
   useEffect(() => {
     const handleDeepLink = (props: {url: string}) => {
-      const regex = /[?&]([^=#]+)=([^&#]*)/g
-      const match = regex.exec(props.url)![2]
-      setToken(match)
+      const regex = /access_token=([^&]+)/
+      const match = props.url.match(regex)
+      login(match![1])
     }
     Linking.addEventListener('url', handleDeepLink)
   }, [])
