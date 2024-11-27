@@ -6,13 +6,13 @@ export interface PlayerProviderProps {
 }
 
 export interface PlayerContextProps {
-  player: Sound | undefined
+  player: Partial<Sound> | undefined
   isPlaying: boolean
   duration: number
   track: Track | undefined
   onPlay: () => void
   onStop: () => void
   onClose: () => void
-  setMusic: (track: Track) => Promise<void>
+  setMusic: (track: Partial<Track>) => Promise<void>
   onSetTime: (n: number) => void
 }

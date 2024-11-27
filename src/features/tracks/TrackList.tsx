@@ -11,7 +11,9 @@ export interface AlbumListProps {
 const TrackList = ({tracks, title}: AlbumListProps) => {
   const {setMusic} = usePlayerContext()
 
-  const onPlayMusic = (token: Track) => setMusic(token)
+  const onPlayMusic = (token: Track) => {
+    setMusic(token)
+  }
 
   return (
     <View>

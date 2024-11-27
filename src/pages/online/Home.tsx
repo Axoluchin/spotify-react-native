@@ -1,5 +1,11 @@
 import {useState} from 'react'
-import {RefreshControl, SafeAreaView, ScrollView, View} from 'react-native'
+import {
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native'
 import {useQueries} from '@tanstack/react-query'
 
 import {useAuthContext} from '../../auth'
@@ -61,7 +67,10 @@ const Home = () => {
             title="Tus albums guardados"
             albums={albums?.items.map(({album}) => album) || []}
           />
-          <PlayListList title="Tus playlist" albums={playlists?.items || []} />
+          <PlayListList
+            title="Tus playlist"
+            albums={playlists?.items.filter(n => n) || []}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

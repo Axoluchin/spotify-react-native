@@ -7,7 +7,7 @@ import {Track} from '../../api/interface'
 export const PlayerContext = createContext<PlayerContextProps | null>(null)
 
 const PlayerProvider = ({children}: PlayerProviderProps) => {
-  const [track, setTrack] = useState<Track>()
+  const [track, setTrack] = useState<Partial<Track>>()
   const [player, setPlayer] = useState<Sound>()
   const [isPlaying, setIsPlaying] = useState(false)
   const duration = 29.7
@@ -15,6 +15,10 @@ const PlayerProvider = ({children}: PlayerProviderProps) => {
   const setMusic = async (theme: Track) => {
     player?.stop()
 
+    if (!theme.preview_url) {
+      console.warn('No preview URL')
+      return
+    }
     const music = new Sound(theme.preview_url, Sound.MAIN_BUNDLE, error => {
       if (error) console.error(error)
       music.play(success => setIsPlaying(false))

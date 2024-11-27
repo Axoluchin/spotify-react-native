@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {SPOTIFY_URI} from '../global-config'
-import {AlbumResponse} from './interface'
+import {AlbumResponse, GetAlbumResponse} from './interface'
 
 export const getUserSavedAlbums = async (
   token = 'NO_ACCESS_TOKEN',
@@ -15,6 +15,28 @@ export const getUserSavedAlbums = async (
         Authorization: `Bearer ${token}`,
       },
     })
+    return data
+  } catch (error) {
+    console.warn(error)
+    return null
+  }
+}
+
+export const getAlbum = async (
+  id: string,
+  token = 'NO_ACCESS_TOKEN',
+  market = 'es_MX',
+) => {
+  try {
+    const {data} = await axios.get<GetAlbumResponse>(
+      `${SPOTIFY_URI}/albums/${id}`,
+      {
+        params: {market},
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
     return data
   } catch (error) {
     console.warn(error)
