@@ -35,6 +35,12 @@ const PlayerProvider = ({children}: PlayerProviderProps) => {
     player?.setCurrentTime(n)
   }
 
+  const onClose = () => {
+    player?.stop()
+    player?.release()
+    setPlayer(undefined)
+  }
+
   const memorizedValue = useMemo(
     () => ({
       player,
@@ -43,10 +49,21 @@ const PlayerProvider = ({children}: PlayerProviderProps) => {
       track,
       onPlay,
       onStop,
+      onClose,
       setMusic,
       onSetTime,
     }),
-    [player, isPlaying, duration, track, onPlay, onStop, setMusic, onSetTime],
+    [
+      player,
+      isPlaying,
+      duration,
+      track,
+      onPlay,
+      onStop,
+      onClose,
+      setMusic,
+      onSetTime,
+    ],
   )
 
   return (

@@ -12,6 +12,7 @@ export interface PlayerContextProps {
   track: Track | undefined
   onPlay: () => void
   onStop: () => void
+  onClose: () => void
   setMusic: (track: Track) => Promise<void>
   onSetTime: (n: number) => void
 }

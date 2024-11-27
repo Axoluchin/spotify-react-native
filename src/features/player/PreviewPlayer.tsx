@@ -14,8 +14,16 @@ import usePlayerContext from './usePlayerContext'
 const PreviewPlayer = () => {
   const [seconds, setSeconds] = useState(0)
   const {width} = useWindowDimensions()
-  const {player, track, duration, isPlaying, onPlay, onStop, onSetTime} =
-    usePlayerContext()
+  const {
+    player,
+    track,
+    duration,
+    isPlaying,
+    onClose,
+    onPlay,
+    onStop,
+    onSetTime,
+  } = usePlayerContext()
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -50,6 +58,9 @@ const PreviewPlayer = () => {
               {track?.artists.map(({name}) => name)}
             </Text>
           </View>
+          <TouchableOpacity onPress={onClose}>
+            <Ionicons name={'close'} size={36} color="#898989" />
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               if (isPlaying) {
