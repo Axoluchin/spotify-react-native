@@ -1,18 +1,37 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack'
 import {Home} from '../pages/online'
+import Album from '../pages/online/Album'
 
-const Stack = createNativeStackNavigator()
+type OnlineStackParamList = {
+  Home: undefined
+  Album: {albumID: string}
+}
+
+export type StackOnlineProps = NativeStackNavigationProp<
+  OnlineStackParamList,
+  'Home'
+>
+
+export type PagesOnlineProps = NativeStackScreenProps<
+  OnlineStackParamList,
+  'Album'
+>
+
+const Stack = createNativeStackNavigator<OnlineStackParamList>()
 
 function StackOnline() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerShown: false,
-        }}
-      />
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Album" component={Album} />
     </Stack.Navigator>
   )
 }
