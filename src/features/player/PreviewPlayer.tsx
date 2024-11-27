@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Slider from '@react-native-community/slider'
 
 import {
@@ -16,6 +16,20 @@ const PreviewPlayer = () => {
   const {width} = useWindowDimensions()
   const {player, track, duration, isPlaying, onPlay, onStop, onSetTime} =
     usePlayerContext()
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (seconds <= 30 && isPlaying) setSeconds(prevCount => prevCount + 1)
+    }, 1000)
+    // Cada 1000ms (1 segundo)
+
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => clearInterval(intervalId)
+  }, [isPlaying, seconds])
+
+  useEffect(() => {
+    setSeconds(0)
+  }, [track])
 
   if (!player) return null
 
@@ -36,7 +50,15 @@ const PreviewPlayer = () => {
               {track?.artists.map(({name}) => name)}
             </Text>
           </View>
-          <TouchableOpacity onPress={isPlaying ? onStop : onPlay}>
+          <TouchableOpacity
+            onPress={() => {
+              if (isPlaying) {
+                onStop()
+                return
+              }
+              if (seconds > duration - 1) setSeconds(0)
+              onPlay()
+            }}>
             <Ionicons
               name={isPlaying ? 'pause' : 'play'}
               size={36}
@@ -55,8 +77,9 @@ const PreviewPlayer = () => {
             minimumTrackTintColor="#1ED760"
             maximumTrackTintColor="#1ED760"
             onValueChange={n => {
-              onSetTime(n)
+              if (Math.round(n) === Math.round(seconds)) return
               setSeconds(n)
+              onSetTime(n)
             }}
           />
         </View>

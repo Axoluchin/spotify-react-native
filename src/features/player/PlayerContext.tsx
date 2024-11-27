@@ -10,7 +10,7 @@ const PlayerProvider = ({children}: PlayerProviderProps) => {
   const [track, setTrack] = useState<Track>()
   const [player, setPlayer] = useState<Sound>()
   const [isPlaying, setIsPlaying] = useState(false)
-  const duration = 30
+  const duration = 29.7
 
   const setMusic = async (theme: Track) => {
     player?.stop()
