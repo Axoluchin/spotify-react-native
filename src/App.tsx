@@ -1,6 +1,6 @@
 import './styles/global.css'
 
-import {StatusBar, useColorScheme} from 'react-native'
+import {Button, StatusBar, useColorScheme} from 'react-native'
 import {colorScheme} from 'nativewind'
 import {
   DarkTheme,
@@ -11,6 +11,8 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
 import {TabNav} from './navigation'
 import AuthProvider from './auth/AuthContexts'
+import PlayerProvider from './features/player/PlayerContext'
+import {PreviewPlayer} from './features/player'
 
 function App(): React.JSX.Element {
   const queryClient = new QueryClient()
@@ -20,25 +22,30 @@ function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <NavigationContainer
-          theme={
-            themeScheme === 'dark'
-              ? {
-                  ...DarkTheme,
-                  colors: {...DarkTheme.colors, background: '#111111'},
-                }
-              : DefaultTheme
-          }>
-          <StatusBar
-            backgroundColor={
+        <PlayerProvider>
+          <NavigationContainer
+            theme={
               themeScheme === 'dark'
-                ? '#111111'
-                : DefaultTheme.colors.background
-            }
-            barStyle={themeScheme === 'dark' ? 'light-content' : 'dark-content'}
-          />
-          <TabNav />
-        </NavigationContainer>
+                ? {
+                    ...DarkTheme,
+                    colors: {...DarkTheme.colors, background: '#111111'},
+                  }
+                : DefaultTheme
+            }>
+            <StatusBar
+              backgroundColor={
+                themeScheme === 'dark'
+                  ? '#111111'
+                  : DefaultTheme.colors.background
+              }
+              barStyle={
+                themeScheme === 'dark' ? 'light-content' : 'dark-content'
+              }
+            />
+            <TabNav />
+            <PreviewPlayer />
+          </NavigationContainer>
+        </PlayerProvider>
       </AuthProvider>
     </QueryClientProvider>
   )

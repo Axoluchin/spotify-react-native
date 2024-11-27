@@ -1,6 +1,7 @@
 import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native'
 import React from 'react'
 import {Track} from '../../api/interface'
+import usePlayerContext from '../player/usePlayerContext'
 
 export interface AlbumListProps {
   title: string
@@ -8,6 +9,10 @@ export interface AlbumListProps {
 }
 
 const TrackList = ({tracks, title}: AlbumListProps) => {
+  const {setMusic} = usePlayerContext()
+
+  const onPlayMusic = (token: Track) => setMusic(token)
+
   return (
     <View>
       <Text className="dark:text-white text-2xl font-satochi font-semibold mx-4 mb-2">
@@ -22,8 +27,12 @@ const TrackList = ({tracks, title}: AlbumListProps) => {
         horizontal
         data={tracks}
         keyExtractor={({id}) => id}
-        renderItem={({item: {name, artists, album}}) => (
-          <TouchableOpacity className="w-48 gap-2">
+        renderItem={({item: {name, artists, album, preview_url, ...props}}) => (
+          <TouchableOpacity
+            onPress={() =>
+              onPlayMusic({name, artists, album, preview_url, ...props})
+            }
+            className="w-48 gap-2">
             <Image src={album.images[0].url} className="size-48 rounded-lg" />
             <Text
               textBreakStrategy="simple"
