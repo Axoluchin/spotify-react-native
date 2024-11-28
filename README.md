@@ -1,14 +1,23 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Spotify with React Native
 
-# Getting Started
+Clone de Spotify con React Native usando la Web API
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Requisitos
 
-## Step 1: Start the Metro Server
+- Android Studio
+- Node +20
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Configurar app
 
-To start Metro, run the following command from the _root_ of your React Native project:
+### Variables de entorno
+
+```bash
+# .env
+API_URL=<URL de la api de Spotify>
+API_TOKEN=<El ClientID de tu app en spotify developer>
+```
+
+### Iniciar metro
 
 ```bash
 # using npm
@@ -18,9 +27,9 @@ npm start
 yarn start
 ```
 
-## Step 2: Start your Application
+## Iniciar plataforma
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+Cuando el servidor de metro esté inicializado puedes abrir otra terminal y seleccionar que plataforma se ejecutará
 
 ### For Android
 
@@ -42,38 +51,20 @@ npm run ios
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+De igual manera en la misma terminal del metro puedes seleccionar la plataforma
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+## Features
 
-## Step 3: Modifying your App
+Este proyecto utiliza los siguientes features en react native
 
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- [x] React Navigation
+- [x] Universal links
+- [x] Almacenamiento de token de autenticación
+- [x] Reproducir audio (si la API de Spotify regresa el `preview_url`)
+- [ ] Tema oscuro y claro según la configuración del sistema
+- [ ] Buscar canciones
+- [ ] Actualizar playlist
+- [ ] Guardar artistas, playlist, álbumes, etc
+- [ ] Refrescar token de sesión
+- [ ] Modo offline para consultar playlist y álbumes guardados en el dispositivo
+- [ ] Alternar entré claro / oscuro independientemente del sistema
